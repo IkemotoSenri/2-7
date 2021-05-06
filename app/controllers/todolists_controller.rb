@@ -16,7 +16,7 @@ class TodolistsController < ApplicationController
    end
    
    def show
-     @list = List.find(params[:id])
+      @list = List.find(params[:id])
    end
    def edit
      @list = List.find(params[:id])
@@ -26,11 +26,16 @@ class TodolistsController < ApplicationController
      list.update(list_params)
      redirect_to todolist_path(list.id)
    end
+   def destroy
+     list = List.find(params[:id])  # データ（レコード）を1件取得
+     list.destroy  # データ（レコード）を削除
+     redirect_to todolists_path  # 投稿一覧画面へリダイレクト
+   end
    
   private
   # ストロングパラメータ
   def list_params
-    params.require(:list).permit(:title, :body)
+    params.require(:list).permit(:title, :body, :image)
   end
   
 end
